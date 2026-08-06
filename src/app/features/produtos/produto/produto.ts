@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CurrencyPipe, UpperCasePipe } from '@angular/common';
-import { PrecoFormatadoPipe } from '../../pipes/preco-formatado-pipe';
+import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 
 
 
@@ -20,7 +20,7 @@ export class Produto {
     this.produtoSelecionado.emit(this.nome);
   }
 
-
+}
 //=================================================
 //              Aprendi no dia 04.08
 //=================================================
@@ -57,6 +57,6 @@ export class Produto {
 //=================================================
 //              Aprendi no dia 05.08
 //=================================================
-}
+
 
 
