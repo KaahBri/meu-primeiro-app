@@ -1,13 +1,20 @@
-
-  import { Routes } from '@angular/router';
-  import { Home } from './features/home/home/home';
-  import { ListaProdutos } from './features/produtos/lista-produtos/lista-produtos';
-  import { Carrinho } from './features/carrinho/carrinho/carrinho';
-
-
-  // São as rotas bb
+ import { Routes } from '@angular/router';
   export const routes: Routes = [
-    { path: '', component: Home }, // Cai em Home
-    { path: 'produtos', component: ListaProdutos }, // Cai em produtos
-    { path: 'carrinho', component: Carrinho }, // Cai em Carrinhos
+    {
+      path: '',
+      loadComponent: () => import('./features/home/home/home').then((m) => m.Home),
+    },
+    {
+      path: 'produtos',
+      loadComponent: () =>
+        import('./features/produtos/lista-produtos/lista-produtos').then((m) => m.ListaProdutos),
+    },
+    {
+      path: 'carrinho',
+      loadComponent: () => import('./features/carrinho/carrinho/carrinho').then((m) => m.Carrinho),
+    },
+    {
+      path: '**',
+      redirectTo: '', // redireciona para a página inicial
+    },
   ];
