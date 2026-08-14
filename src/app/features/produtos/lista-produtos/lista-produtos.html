@@ -26,11 +26,14 @@
     <p>Total de produtos: {{ totalProdutos() }}</p>
     <hr />
     @for (item of produtos(); track $index) {
-      <app-produto [nome]="item.nome" [preco]="item.preco" />
+      <app-produto
+        [nome]="item.nome"
+        [preco]="item.preco"
+        (produtoSelecionado)="exibirProduto($event)"
+        (produtoAdicionado)="adicionarAoCarrinho($event)"
+      />
     }
   }
-
-
     <h2>
       Produto selecionado:
       @if (produtoSelecionado()) {
