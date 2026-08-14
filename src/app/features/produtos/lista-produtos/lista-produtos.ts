@@ -21,12 +21,17 @@ export class ListaProdutos {
   //Writesignal -> signal (reativo) que permite alterações (com set ou update)
   produtos = signal<{ nome: string; preco: number }[]>([]); //add hj (13.08.26) papai, Aprendndo API
   
+  
+
+
   carregando = signal(true);
 
   produtoSelecionado = signal<string | null>(null);
    
    // o começo de uma nova era (Carrinho de compras)
   carrinho = signal<{ nome: string; preco: number }[]>([]);
+
+  erro = signal<string | null>(null); // Add hj (14.08.26)
  
 
   //computed 
@@ -68,6 +73,9 @@ export class ListaProdutos {
 
 
   carregarProdutos() {
+
+    this.erro.set(null); // limpa erro anterior
+
     this.carregando.set(true);
 
     this.produtosService.buscarProdutos().subscribe({
@@ -78,6 +86,7 @@ export class ListaProdutos {
       },
       error: (erro) => {
         console.error('Erro ao carregar produtos:', erro);
+         this.erro.set('Erro ao carregar produtos. Verifique sua conexão e tente novamente.');
         this.carregando.set(false);
       },
     });
