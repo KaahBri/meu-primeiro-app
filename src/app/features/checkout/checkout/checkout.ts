@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormGroup,
@@ -32,22 +32,38 @@ export class Checkout {
   });
 
    
+     compraFinalizada = signal(false);
 
 
   
 
-   finalizar() {
-    if (this.formulario.invalid) {
-      console.log('Formulário inválido');
+    finalizar() {
+    this.compraFinalizada.set(false);
+
+    if (this.carrinhoService.carrinhoVazio()) {
+      console.log('Não é possível finalizar uma compra com o carrinho vazio.');
       return;
     }
 
-     const dados = this.formulario.value;
-    const itens = this.carrinhoService.itens();
+    if (this.formulario.invalid) {
+      console.log('Formulário inválido');
+      this.formulario.markAllAsTouched();
+      return;
+    }
 
+    const dados = this.formulario.value;
+    const itens = this.carrinhoService.itens();
+    const total = this.carrinhoService.total();
+
+    console.log('Compra finalizada com sucesso!');
     console.log('Dados do formulário:', dados);
     console.log('Itens do carrinho:', itens);
-}
+    console.log('Total da compra:', total);
+
+    this.carrinhoService.limpar();
+    this.formulario.reset();
+    this.compraFinalizada.set(true);
+  }
 
 }
 
